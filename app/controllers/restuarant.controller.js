@@ -80,9 +80,23 @@ module.exports = {
                     error  : err
                 })
             })
-    }
+    },
 
+    restuarantAllMenus : async (req, res) => {
+        restuarantService.restuarantAllMenu(req.params)
+            .then((data) => {
+                return res.json({
+                    status : 200,
+                    data  : data
+                })
+            })
+            .catch((err) => {
+                return res.json({
+                    status : 400,
+                    error  : err
+                })
+            })
+    }
 
 }
 
-// aZynwk4ecjXuUxBB

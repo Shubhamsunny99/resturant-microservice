@@ -3,7 +3,7 @@
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const customerRoutes = require('./routes/restuarant.route')
+const restuarantRoutes = require('./routes/restuarant.route')
 
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
-app.use("/restuarants", customerRoutes)
+app.use("/restuarants", restuarantRoutes)
 
 
 const swaggerDocument = YAML.load('./swagger.yaml');

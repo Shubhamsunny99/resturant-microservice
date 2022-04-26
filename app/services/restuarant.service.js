@@ -2,6 +2,7 @@
 // Database etc 
 
 const Restuarant = require("../models/restuarant");
+const mongoose = require('mongoose')
 
 module.exports = {
     
@@ -99,5 +100,37 @@ module.exports = {
                 })
 
         })
-    }
+    },
+
+    restuarantAllMenu: async (params) => {
+        return new Promise(async(resolve, reject) => {
+            const _id = params.id;
+            await Restuarant.aggregate([
+                    {
+                        $match : {_id : mongoose.Types.ObjectId(_id)}
+                    },
+                    {
+                        $lookup : {
+                            from         : "menus",
+                            localField   : "_id",
+                            foreignField : "restuarantID",
+                            as           : "menus"
+                        }
+                    },
+                    {
+                        $project : {
+                            "menus._id": 0,
+                            "menus.restuarantID" : 0
+                        }
+                    }
+                ])
+                .then(async restuarantD => {
+                    return resolve(restuarantD)
+                })
+                .catch(err => {
+                    return reject(err)
+                })
+
+        })
+    },
 }

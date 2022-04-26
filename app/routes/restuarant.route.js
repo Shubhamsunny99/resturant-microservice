@@ -17,7 +17,6 @@ restuarantsRoutes.put('/update-restuarant/:id', Validation.addRestuarantValidati
 
 restuarantsRoutes.put('/delete-restuarant/:id', restuarantController.deleteRestuarants)
 
-
 restuarantsRoutes.post('/add-menu', Validation.addMenuValidation, menuController.addMenus)
 
 restuarantsRoutes.get('/get-all-menu', menuController.getAllMenus)
@@ -25,6 +24,9 @@ restuarantsRoutes.get('/get-all-menu', menuController.getAllMenus)
 restuarantsRoutes.get('/get-individual-menu/:id', menuController.getIndiviualMenus)
 
 restuarantsRoutes.put('/update-menu/:id', Validation.addMenuValidation, menuController.updateMenus)
+
+restuarantsRoutes.get('/restuarant-all-menus/:id', restuarantController.restuarantAllMenus)
+
 
 
 module.exports = restuarantsRoutes
