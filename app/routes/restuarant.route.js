@@ -27,7 +27,11 @@ restuarantsRoutes.put('/update-menu/:id', Validation.addMenuValidation, menuCont
 
 restuarantsRoutes.get('/restuarant-all-menus/:id', restuarantController.restuarantAllMenus)
 
+restuarantsRoutes.post('/find-data-by-restuarant-name',Validation.findDataByRestNameValidation, restuarantController.fetchDataByRetuarantNames)
 
+restuarantsRoutes.post('/find-data-by-menu-name',Validation.findDataByMenuNameValidation, restuarantController.fetchDataByMenuNames)
+
+restuarantsRoutes.post('/find-data-by-menu-price',Validation.findDataByMenuPriceValidation, restuarantController.fetchDataByMenuPrices)
 
 module.exports = restuarantsRoutes
 

@@ -2,6 +2,7 @@
 // Database etc 
 
 const Restuarant = require("../models/restuarant");
+const Menu       = require("../models/menu");
 const mongoose = require('mongoose')
 
 module.exports = {
@@ -133,4 +134,86 @@ module.exports = {
 
         })
     },
+
+    fetchDataByRetuarantName : async (body) => {
+        return new Promise(async(resolve, reject) => {
+            const _id = params.id;
+            await Restuarant.aggregate([
+                    {
+                        $match : {name : body.name}
+                    },
+                    {
+                        $lookup : {
+                            from         : "menus",
+                            localField   : "_id",
+                            foreignField : "restuarantID",
+                            as           : "menus"
+                        }
+                    },
+                    {
+                        $project : {
+                            "menus._id": 0,
+                            "menus.restuarantID" : 0
+                        }
+                    }
+                ])
+                .then(async restuarantD => {
+                    return resolve(restuarantD)
+                })
+                .catch(err => {
+                    return reject(err)
+                })
+
+        })
+    },
+
+    fetchDataByMenuName : async (body) => {
+        return new Promise(async(resolve, reject) => {
+            await Menu.aggregate([
+                    {
+                        $match : {menuName : body.menuName}
+                    },
+                    {
+                        $lookup : {
+                            from         : "restuarants",
+                            localField   : "restuarantID",
+                            foreignField : "_id",
+                            as           : "resstuarantDetails"
+                        }
+                    }
+                ])
+                .then(async menuD => {
+                    return resolve(menuD)
+                })
+                .catch(err => {
+                    return reject(err)
+                })
+
+        })
+    },
+
+    fetchDataByMenuPrice : async (body) => {
+        return new Promise(async(resolve, reject) => {
+            await Menu.aggregate([
+                    {
+                        $match : {price : {$lte : body.price}}
+                    },
+                    {
+                        $lookup : {
+                            from         : "restuarants",
+                            localField   : "restuarantID",
+                            foreignField : "_id",
+                            as           : "resstuarantDetails"
+                        }
+                    }
+                ])
+                .then(async menuD => {
+                    return resolve(menuD)
+                })
+                .catch(err => {
+                    return reject(err)
+                })
+
+        })
+    }
 }

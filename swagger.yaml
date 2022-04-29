@@ -333,3 +333,86 @@ paths:
           description: ""
       security:
       - api_key: []
+
+  /restuarants/find-data-by-restuarant-name:
+    post:
+      tags:
+      - "restuarant"
+      summary: "filter data by restuarant name"
+      description: ""
+      operationId: "filter data by restuarant name"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Pet"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+
+  /restuarants/find-data-by-menu-name:
+    post:
+      tags:
+      - "menu"
+      summary: "filter data by menu name"
+      description: ""
+      operationId: "filter data by menu name"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Pet"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"
+  /restuarants/find-data-by-menu-price:
+    post:
+      tags:
+      - "menu price"
+      summary: "filter data by menu price "
+      description: ""
+      operationId: "filter data by menu price"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Pet"
+      responses:
+        "405":
+          description: "Invalid input"
+      security:
+      - petstore_auth:
+        - "write:pets"
+        - "read:pets"

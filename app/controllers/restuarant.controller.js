@@ -96,6 +96,54 @@ module.exports = {
                     error  : err
                 })
             })
+    },
+
+    fetchDataByRetuarantNames : async (req, res) => {
+        restuarantService.fetchDataByRetuarantName(req.body)
+            .then((data) => {
+                return res.json({
+                    status : 200,
+                    data  : data
+                })
+            })
+            .catch((err) => {
+                return res.json({
+                    status : 400,
+                    error  : err
+                })
+            })
+    },
+
+    fetchDataByMenuNames : async (req, res) => {
+        restuarantService.fetchDataByMenuName(req.body)
+            .then((data) => {
+                return res.json({
+                    status : 200,
+                    data  : data
+                })
+            })
+            .catch((err) => {
+                return res.json({
+                    status : 400,
+                    error  : err
+                })
+            })
+    },
+
+    fetchDataByMenuPrices : async (req, res) => {
+        restuarantService.fetchDataByMenuPrice(req.body)
+            .then((data) => {
+                return res.json({
+                    status : 200,
+                    data  : data
+                })
+            })
+            .catch((err) => {
+                return res.json({
+                    status : 400,
+                    error  : err
+                })
+            })
     }
 
 }
