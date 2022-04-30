@@ -3,7 +3,9 @@
 
 const Restuarant = require("../models/restuarant");
 const Menu       = require("../models/menu");
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Axios    = require('axios');
+const Redis    = require('../../redis');
 
 module.exports = {
     
@@ -209,6 +211,50 @@ module.exports = {
                 ])
                 .then(async menuD => {
                     return resolve(menuD)
+                })
+                .catch(err => {
+                    return reject(err)
+                })
+
+        })
+    },
+
+    allDetailsOfRestuarant : async (params) => {
+        return new Promise(async(resolve, reject) => {
+            let checkValueInCache = await Redis.getValue(params.id)
+            if(checkValueInCache){
+                return resolve(checkValueInCache)
+            }
+            await Restuarant.aggregate([
+                    {
+                        $match : {_id : mongoose.Types.ObjectId(params.id)}
+                    },
+                    {
+                        $lookup : {
+                            from         : "menus",
+                            localField   : "_id",
+                            foreignField : "restuarantID",
+                            as           : "menus"
+                        }
+                    },
+                    {
+                        $project : {
+                            "menus._id": 0,
+                            "menus.restuarantID" : 0
+                        }
+                    }
+                ])
+                .then(async menuD => {
+                    const reviewData = await Axios.get('http://localhost:8081/reviews/fetch-review-by-restuarant', {
+                        params: {
+                          id: params.id
+                        }
+                      })
+                      await Redis.setValue(params.id , {menuD, reviewData})
+                    return resolve({
+                        status : 200,
+                        data : {menuD, reviewData}
+                    }) 
                 })
                 .catch(err => {
                     return reject(err)

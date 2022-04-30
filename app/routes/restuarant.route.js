@@ -33,6 +33,8 @@ restuarantsRoutes.post('/find-data-by-menu-name',Validation.findDataByMenuNameVa
 
 restuarantsRoutes.post('/find-data-by-menu-price',Validation.findDataByMenuPriceValidation, restuarantController.fetchDataByMenuPrices)
 
+restuarantsRoutes.get('/get-all-details-of-restuarant/:id', restuarantController.allDetailsOfRestuarants)
+
 module.exports = restuarantsRoutes
 
 // aZynwk4ecjXuUxBB

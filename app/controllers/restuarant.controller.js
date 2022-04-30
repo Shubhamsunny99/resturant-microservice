@@ -144,6 +144,22 @@ module.exports = {
                     error  : err
                 })
             })
+    },
+
+    allDetailsOfRestuarants :  async (req, res) => {
+        restuarantService.allDetailsOfRestuarant(req.params)
+            .then((data) => {
+                return res.json({
+                    status : 200,
+                    data  : data
+                })
+            })
+            .catch((err) => {
+                return res.json({
+                    status : 400,
+                    error  : err
+                })
+            })
     }
 
 }
